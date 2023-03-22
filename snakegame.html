@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<style type="text/css">
+		#snakeimg{
+			position: absolute;
+			width: 70px;
+			transform: scaleX(1);
+		}
+		#foodimg{
+			position: absolute;
+			width: 30px;
+		}
+		#tab
+		{
+			margin-left: auto;
+			margin-right: auto;
+		}
+		#game
+		{
+			border: white;
+			border-width: 20px;
+		}
+	</style>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Game</title>
+</head>
+<body onload="placefood()" onkeydown="checkKey(event)" style="background-color:grey">
+	<table id="tab" style="border: 30px;">
+	<tr>
+	<td><input type="button" name="" id="right" value="Right" onclick="startright()"/></td>
+	<td><input type="button" name="" id="left" value="Left" onclick="startleft()"/></td>
+	<td><input type="button" name="" id="top" value="Top" onclick="starttop()"/></td>
+	<td><input type="button" name="" id="bottom" value="Bottom" onclick="startbottom()"/></td>
+	</tr>
+		<tr>
+		<td colspan="2"><h1>Score</h1></td>
+	<td><h1 id="score">0</h1></td>
+	</tr>
+	<tr><input type="button" name="" id="stop" value="Stop" onkeypress="stopgame()">
+		<input type="button" name="" id="restart" value="Restart" onclick=""></td>
+	</tr>
+</table>
+<div id="game">
+	<img src="snake3.jpg" id="snakeimg" >
+	<img src="food.jpg" id="foodimg" >
+</div>
+	<script type="text/javascript">
+		left=100;
+		top1=100;
+		itop=0;
+		ibottom=0;
+		ileft=0;
+		iright=0;
+		x=0;
+		y=0;
+		n=0;
+		function gotoright()
+		{
+			checkforsure();
+			s=document.getElementById("snakeimg");
+			left+=1;
+			if(left>screen.availWidth)
+			{
+				document.write("died");
+			}
+			s.style.left=left+"px";
+		}
+		function startright()
+		{
+			clearInterval(ileft);
+			clearInterval(itop);
+			clearInterval(ibottom);
+			iright=setInterval(gotoright,20);
+		}
+		function gotoleft()
+		{
+			checkforsure();
+			s=document.getElementById("snakeimg");
+			left-=1;
+			if(left<0)
+			{
+				document.write("died");
+			}
+			s.style.left = left+"px";
+		}
+		function startleft()
+		{
+			clearInterval(iright);
+			clearInterval(itop);
+			clearInterval(ibottom);
+			ileft = setInterval(gotoleft,20);
+		}
+		function gototop() {
+			checkforsure();
+			s=document.getElementById("snakeimg");
+			top1-=1;
+			if(top1>screen.availHeight)
+			{
+				document.write("died");
+			}
+			s.style.top=top1+"px";
+		}
+		function starttop()
+		{
+			clearInterval(iright);
+			clearInterval(ileft);
+			clearInterval(ibottom);
+			itop=setInterval(gototop,20);
+		}
+		function gotobottom() {
+			checkforsure();
+			s=document.getElementById("snakeimg");
+			top1+=1;
+			s.style.top=top1+"px";
+		}
+		function startbottom()
+		{
+			clearInterval(iright);
+			clearInterval(ileft);
+			clearInterval(itop);
+			ibottom=setInterval(gotobottom,20);
+		}
+		function placefood()
+		{
+			x = parseInt(Math.random()*(screen.availWidth-100));
+			y = parseInt(Math.random()*(screen.availHeight-100));
+			document.getElementById("foodimg").style.left=x+"px";
+			document.getElementById("foodimg").style.top=y+"px";
+		}
+		function checkforsure()
+		{
+			if(x-50<left && x+50>left && y-50<top1 && y+50>top1)
+			{
+				placefood();
+				countFun();
+			}
+		}
+		function checkKey(e){
+			if(e.keyCode==37){
+				startleft();
+			}
+			else if(e.keyCode==38){
+				starttop();
+			}
+			else if(e.keyCode==39){
+				startright();
+			}
+			else if(e.keyCode==40){
+				startbottom();
+			}
+		}
+		function countFun()
+		{
+			n++;
+			document.getElementById("score").innerHTML=n;
+		}
+		function stopgame()
+		{
+			
+		}
+	</script>
+</body>
+</html>
